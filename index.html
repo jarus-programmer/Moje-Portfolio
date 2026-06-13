@@ -1,0 +1,976 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Portfolio Yaroslava — ucznia technikum informatycznego. Nowoczesne projekty webowe, umiejętności frontendowe i kontakt." />
+  <meta name="theme-color" content="#070816" />
+  <meta name="robots" content="index,follow" />
+  <title>Yaroslav | Portfolio Junior Web Developer</title>
+
+  <style>
+    :root{
+      --bg:#070816;
+      --bg2:#0c1024;
+      --card:rgba(14,18,40,.72);
+      --card2:rgba(18,24,52,.84);
+      --text:#eef1ff;
+      --muted:#aab2d5;
+      --line:rgba(130,145,255,.14);
+      --accent:#7c5cff;
+      --accent2:#21d4fd;
+      --good:#27f2a6;
+      --shadow:0 24px 70px rgba(0,0,0,.45);
+      --r:22px;
+      --r2:16px;
+      --max:1180px;
+      --font:Inter,system-ui,sans-serif;
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:var(--font);
+      background:
+        radial-gradient(circle at top,#11153a 0,#070816 42%,#05050b 100%);
+      color:var(--text);
+      overflow-x:hidden;
+      -webkit-font-smoothing:antialiased;
+      text-rendering:optimizeLegibility;
+    }
+    a{color:inherit;text-decoration:none}
+    img{max-width:100%;display:block}
+    button,input,textarea,select{font:inherit}
+    ::selection{background:rgba(124,92,255,.35)}
+
+    .wrap{
+      width:min(var(--max),calc(100% - 2rem));
+      margin:0 auto;
+    }
+
+    .gridbg{
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      background-image:
+        linear-gradient(var(--line) 1px,transparent 1px),
+        linear-gradient(90deg,var(--line) 1px,transparent 1px);
+      background-size:34px 34px;
+      mask-image:linear-gradient(to bottom,rgba(0,0,0,.8),transparent 90%);
+      z-index:0;
+    }
+
+    .topbar{
+      position:sticky;
+      top:0;
+      z-index:50;
+      backdrop-filter:blur(20px);
+      background:rgba(7,8,22,.66);
+      border-bottom:1px solid rgba(130,145,255,.1);
+    }
+
+    .nav{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      min-height:68px;
+      gap:1rem;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:.8rem;
+      font-weight:800;
+      letter-spacing:.02em;
+    }
+
+    .mark{
+      width:38px;
+      height:38px;
+      border-radius:12px;
+      background:linear-gradient(135deg,var(--accent),var(--accent2));
+      box-shadow:0 10px 30px rgba(124,92,255,.32);
+    }
+
+    .links{
+      display:flex;
+      align-items:center;
+      gap:1.2rem;
+    }
+
+    .links a{
+      color:var(--muted);
+      font-size:.95rem;
+      transition:.2s ease;
+    }
+
+    .links a:hover,
+    .links a.active{
+      color:#fff;
+    }
+
+    .menuBtn{
+      display:none;
+      width:46px;
+      height:46px;
+      border:1px solid rgba(255,255,255,.12);
+      border-radius:14px;
+      background:rgba(255,255,255,.03);
+      color:#fff;
+      cursor:pointer;
+    }
+
+    .hero{
+      padding:4.5rem 0 2.5rem;
+      min-height:calc(100vh - 68px);
+      display:grid;
+      align-items:center;
+      position:relative;
+      z-index:1;
+    }
+
+    .heroGrid{
+      display:grid;
+      grid-template-columns:1.08fr .92fr;
+      gap:2rem;
+      align-items:center;
+    }
+
+    .eyebrow{
+      display:inline-flex;
+      gap:.5rem;
+      align-items:center;
+      font-size:.78rem;
+      letter-spacing:.28em;
+      text-transform:uppercase;
+      color:var(--good);
+      font-weight:800;
+    }
+
+    .eyebrow::before{
+      content:'';
+      width:9px;
+      height:9px;
+      border-radius:50%;
+      background:var(--good);
+      box-shadow:0 0 18px var(--good);
+    }
+
+    h1{
+      font-size:clamp(2.8rem,8vw,5.8rem);
+      line-height:.95;
+      margin:.9rem 0 1rem;
+      letter-spacing:-.05em;
+    }
+
+    .lead{
+      max-width:58ch;
+      color:var(--muted);
+      font-size:clamp(1rem,2vw,1.2rem);
+      line-height:1.7;
+      margin:0 0 1.4rem;
+    }
+
+    .pillRow,
+    .techRow{
+      display:flex;
+      flex-wrap:wrap;
+      gap:.65rem;
+    }
+
+    .pill,
+    .tech{
+      padding:.7rem 1rem;
+      border:1px solid rgba(130,145,255,.16);
+      background:rgba(255,255,255,.03);
+      border-radius:999px;
+      color:#d9def7;
+      font-size:.9rem;
+    }
+
+    .cta{
+      display:flex;
+      flex-wrap:wrap;
+      gap:.8rem;
+      margin-top:1.6rem;
+    }
+
+    .btn{
+      padding:.95rem 1.2rem;
+      border-radius:999px;
+      border:1px solid transparent;
+      font-weight:800;
+      transition:.22s ease;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+    }
+
+    .btn:hover{
+      transform:translateY(-2px);
+    }
+
+    .btnPrimary{
+      background:linear-gradient(135deg,var(--accent),#5a83ff);
+      box-shadow:0 16px 40px rgba(124,92,255,.3);
+    }
+
+    .btnGhost{
+      border-color:rgba(130,145,255,.2);
+      background:rgba(255,255,255,.02);
+    }
+
+    .heroCard{
+      background:linear-gradient(180deg,rgba(18,24,52,.88),rgba(11,14,31,.86));
+      border:1px solid rgba(130,145,255,.14);
+      border-radius:28px;
+      padding:1rem;
+      box-shadow:var(--shadow);
+    }
+
+    .preview{
+      border-radius:22px;
+      min-height:460px;
+      background:
+        radial-gradient(circle at 30% 20%,rgba(33,212,253,.18),transparent 28%),
+        radial-gradient(circle at 70% 30%,rgba(124,92,255,.22),transparent 32%),
+        linear-gradient(180deg,#0b1027,#070816);
+      border:1px solid rgba(255,255,255,.06);
+      position:relative;
+      overflow:hidden;
+      display:grid;
+      place-items:center;
+    }
+
+    .orb{
+      position:absolute;
+      border-radius:50%;
+      filter:blur(10px);
+    }
+
+    .o1{
+      width:220px;
+      height:220px;
+      background:rgba(124,92,255,.22);
+      top:10%;
+      left:8%;
+      animation:float 9s ease-in-out infinite;
+    }
+
+    .o2{
+      width:180px;
+      height:180px;
+      background:rgba(33,212,253,.18);
+      right:10%;
+      bottom:12%;
+      animation:float 10s ease-in-out infinite reverse;
+    }
+
+    .glass{
+      position:absolute;
+      inset:18px;
+      border-radius:18px;
+      background:rgba(255,255,255,.03);
+      border:1px solid rgba(255,255,255,.06);
+    }
+
+    .previewInner{
+      position:relative;
+      z-index:1;
+      text-align:center;
+      padding:2rem;
+    }
+
+    .previewInner h2{
+      margin:.4rem 0 .7rem;
+      font-size:1.4rem;
+    }
+
+    .statGrid{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:.8rem;
+      margin-top:1rem;
+    }
+
+    .stat{
+      padding:1rem;
+      border-radius:18px;
+      background:rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.06);
+    }
+
+    .stat strong{
+      display:block;
+      font-size:1.5rem;
+    }
+
+    .stat span{
+      color:var(--muted);
+      font-size:.82rem;
+    }
+
+    .section{
+      padding:5rem 0;
+      position:relative;
+      z-index:1;
+    }
+
+    .head{
+      margin-bottom:1.6rem;
+    }
+
+    .kicker{
+      color:var(--good);
+      font-size:.78rem;
+      letter-spacing:.22em;
+      text-transform:uppercase;
+      font-weight:800;
+    }
+
+    .head h2{
+      margin:.4rem 0 .6rem;
+      font-size:clamp(2rem,4vw,3.1rem);
+      letter-spacing:-.04em;
+    }
+
+    .sub{
+      color:var(--muted);
+      max-width:70ch;
+      line-height:1.7;
+    }
+
+    .aboutGrid,
+    .skillsGrid,
+    .projectsGrid,
+    .expGrid,
+    .achGrid,
+    .contactGrid{
+      display:grid;
+      gap:1rem;
+    }
+
+    .aboutGrid{
+      grid-template-columns:1.1fr .9fr;
+    }
+
+    .panel,
+    .project,
+    .skill,
+    .box{
+      background:var(--card);
+      border:1px solid rgba(130,145,255,.12);
+      border-radius:var(--r);
+      box-shadow:var(--shadow);
+    }
+
+    .panel{
+      padding:1.3rem;
+    }
+
+    .profileList{
+      display:grid;
+      gap:.8rem;
+      margin-top:1rem;
+    }
+
+    .profileList div{
+      padding:.95rem 1rem;
+      border-radius:16px;
+      background:rgba(255,255,255,.03);
+      border:1px solid rgba(255,255,255,.05);
+    }
+
+    .skillsGrid{
+      grid-template-columns:repeat(5,1fr);
+    }
+
+    .skill{
+      padding:1.05rem;
+    }
+
+    .skill h3{
+      margin:.5rem 0 .6rem;
+      font-size:1.05rem;
+    }
+
+    .meter{
+      height:8px;
+      background:rgba(255,255,255,.05);
+      border-radius:999px;
+      overflow:hidden;
+    }
+
+    .meter > i{
+      display:block;
+      height:100%;
+      border-radius:inherit;
+      background:linear-gradient(90deg,var(--accent),var(--accent2));
+    }
+
+    .level{
+      color:var(--muted);
+      font-size:.85rem;
+      margin-top:.6rem;
+    }
+
+    .projectsGrid{
+      grid-template-columns:repeat(3,1fr);
+    }
+
+    .project{
+      padding:1.1rem;
+      display:grid;
+      gap:.9rem;
+    }
+
+    .thumb{
+      min-height:150px;
+      border-radius:18px;
+      background:linear-gradient(135deg,rgba(124,92,255,.24),rgba(33,212,253,.12));
+      border:1px solid rgba(255,255,255,.07);
+      display:grid;
+      place-items:center;
+      text-align:center;
+      padding:1rem;
+    }
+
+    .meta{
+      display:flex;
+      flex-wrap:wrap;
+      gap:.5rem;
+    }
+
+    .tag{
+      font-size:.78rem;
+      padding:.45rem .7rem;
+      border-radius:999px;
+      background:rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.08);
+      color:#d7dcf8;
+    }
+
+    .project ul{
+      margin:.2rem 0 0 1.1rem;
+      color:var(--muted);
+      line-height:1.6;
+    }
+
+    .projectLink{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:.5rem;
+      margin-top:.15rem;
+      padding:.9rem 1rem;
+      border-radius:999px;
+      border:1px solid rgba(130,145,255,.2);
+      background:rgba(255,255,255,.03);
+      font-weight:800;
+      transition:.22s ease;
+    }
+
+    .projectLink:hover{
+      transform:translateY(-2px);
+      background:rgba(255,255,255,.06);
+    }
+
+    .expGrid{
+      grid-template-columns:repeat(3,1fr);
+    }
+
+    .box{
+      padding:1.1rem;
+    }
+
+    .achGrid{
+      grid-template-columns:repeat(4,1fr);
+    }
+
+    .num{
+      font-size:2.1rem;
+      font-weight:900;
+      letter-spacing:-.05em;
+    }
+
+    .contactGrid{
+      grid-template-columns:1fr 1fr;
+    }
+
+    .form{
+      padding:1.2rem;
+    }
+
+    .field{
+      display:grid;
+      gap:.45rem;
+      margin-bottom:.9rem;
+    }
+
+    .field input,
+    .field textarea{
+      width:100%;
+      padding:1rem 1rem;
+      border-radius:16px;
+      background:rgba(255,255,255,.03);
+      border:1px solid rgba(130,145,255,.12);
+      color:#fff;
+      outline:none;
+    }
+
+    .field textarea{
+      min-height:140px;
+      resize:vertical;
+    }
+
+    .field input:focus,
+    .field textarea:focus{
+      border-color:rgba(124,92,255,.65);
+      box-shadow:0 0 0 4px rgba(124,92,255,.15);
+    }
+
+    .footer{
+      padding:2rem 0 3rem;
+      color:var(--muted);
+      border-top:1px solid rgba(130,145,255,.1);
+      margin-top:3rem;
+      position:relative;
+      z-index:1;
+    }
+
+    .reveal{
+      opacity:0;
+      transform:translateY(18px);
+      transition:.75s ease;
+    }
+
+    .reveal.in{
+      opacity:1;
+      transform:none;
+    }
+
+    .mobileNav{
+      display:none;
+      position:fixed;
+      inset:68px 0 auto 0;
+      background:rgba(7,8,22,.98);
+      backdrop-filter:blur(18px);
+      border-bottom:1px solid rgba(130,145,255,.12);
+      padding:1rem;
+      z-index:49;
+    }
+
+    .mobileNav.open{
+      display:grid;
+      gap:.65rem;
+    }
+
+    .mobileNav a{
+      padding:1rem;
+      border-radius:16px;
+      background:rgba(255,255,255,.03);
+      border:1px solid rgba(255,255,255,.05);
+      color:#fff;
+    }
+
+    @keyframes float{
+      50%{transform:translateY(-12px)}
+    }
+
+    @media (max-width: 960px){
+      .heroGrid,
+      .aboutGrid,
+      .contactGrid,
+      .expGrid{
+        grid-template-columns:1fr;
+      }
+      .skillsGrid,
+      .projectsGrid{
+        grid-template-columns:repeat(2,1fr);
+      }
+      .achGrid{
+        grid-template-columns:repeat(2,1fr);
+      }
+      .preview{
+        min-height:340px;
+      }
+    }
+
+    @media (max-width: 720px){
+      .links,
+      .deskOnly{
+        display:none;
+      }
+      .menuBtn{
+        display:inline-grid;
+        place-items:center;
+      }
+      .hero{
+        padding-top:2.2rem;
+        min-height:auto;
+      }
+      .heroGrid{
+        gap:1.2rem;
+      }
+      .pillRow,
+      .cta{
+        gap:.55rem;
+      }
+      .btn{
+        width:100%;
+      }
+      .skillsGrid,
+      .projectsGrid,
+      .achGrid{
+        grid-template-columns:1fr;
+      }
+      .section{
+        padding:3.7rem 0;
+      }
+      .preview{
+        min-height:280px;
+      }
+      .statGrid{
+        grid-template-columns:1fr;
+      }
+      .thumb{
+        min-height:120px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="gridbg"></div>
+
+  <header class="topbar">
+    <div class="wrap nav">
+      <a class="brand" href="#top" aria-label="Yaroslav portfolio">
+        <span class="mark" aria-hidden="true"></span>
+        <span>Yaroslav</span>
+      </a>
+
+      <nav class="links" aria-label="Nawigacja">
+        <a href="#about">O mnie</a>
+        <a href="#skills">Umiejętności</a>
+        <a href="#projects">Projekty</a>
+        <a href="#contact">Kontakt</a>
+      </nav>
+
+      <button class="menuBtn" id="menuBtn" aria-expanded="false" aria-label="Otwórz menu">☰</button>
+    </div>
+
+    <div class="mobileNav" id="mobileNav">
+      <a href="#about">O mnie</a>
+      <a href="#skills">Umiejętności</a>
+      <a href="#projects">Projekty</a>
+      <a href="#experience">Doświadczenie</a>
+      <a href="#achievements">Osiągnięcia</a>
+      <a href="#contact">Kontakt</a>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero wrap">
+      <div class="heroGrid">
+        <div class="reveal">
+          <div class="eyebrow">Uczeń technikum programistycznego</div>
+          <h1>Nowoczesne portfolio młodego web developera.</h1>
+          <p class="lead">
+            Tworzę responsywne strony internetowe, projektuję czytelne interfejsy i rozwijam się w kierunku frontendu oraz praktycznych projektów dla realnych użytkowników.
+          </p>
+
+          <div class="pillRow" aria-label="Technologie">
+            <span class="pill">HTML</span>
+            <span class="pill">CSS</span>
+            <span class="pill">JavaScript</span>
+            <span class="pill">TypeScript</span>
+            <span class="pill">React</span>
+            <span class="pill">Tailwind</span>
+          </div>
+
+          <div class="cta">
+            <a class="btn btnPrimary" href="#projects">Zobacz projekty</a>
+            <a class="btn btnGhost" href="#contact">Kontakt</a>
+          </div>
+        </div>
+
+        <div class="heroCard reveal">
+          <div class="preview">
+            <div class="orb o1" aria-hidden="true"></div>
+            <div class="orb o2" aria-hidden="true"></div>
+            <div class="glass" aria-hidden="true"></div>
+
+            <div class="previewInner">
+              <div class="kicker">Mobile first / Dark mode</div>
+              <h2>Portfolio nastawione na pierwszy kontakt i wiarygodność.</h2>
+              <p class="sub" style="margin:0 auto;max-width:36ch">
+                Minimalizm, mocna hierarchia, szybkie CTA i układ czytelny na telefonie.
+              </p>
+              <div class="statGrid">
+                <div class="stat"><strong>3+</strong><span>projekty</span></div>
+                <div class="stat"><strong>7+</strong><span>technologii</span></div>
+                <div class="stat"><strong>16</strong><span>lat</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section wrap" id="about">
+      <div class="head reveal">
+        <div class="kicker">O mnie</div>
+        <h2>Ambitny uczeń technikum, który buduje realne projekty.</h2>
+        <p class="sub">
+          Interesuje mnie tworzenie stron, które dobrze wyglądają, szybko działają i pomagają użytkownikowi wykonać konkretną akcję. Uczę się przez praktykę, stale poprawiam detale i rozwijam się w stronę nowoczesnego frontendu.
+        </p>
+      </div>
+
+      <div class="aboutGrid">
+        <div class="panel reveal">
+          <h3>Kim jestem</h3>
+          <p class="sub">
+            Jestem uczniem technikum informatycznego, który lubi łączyć kod, estetykę i użyteczność. Najbardziej interesują mnie nowoczesne interfejsy, responsywne layouty oraz strony o wyraźnym charakterze.
+          </p>
+          <div class="profileList">
+            <div>Skupienie: frontend, UI/UX, interakcje.</div>
+            <div>Cel: praktyki, staże, pierwsze zlecenia.</div>
+            <div>Styl pracy: samodzielne testowanie i iteracja.</div>
+          </div>
+        </div>
+
+        <div class="panel reveal">
+          <h3>Dlaczego programowanie</h3>
+          <p class="sub">
+            Programowanie daje mi możliwość budowania czegoś od zera i ciągłego ulepszania efektu. Lubię, kiedy projekt jest nie tylko poprawny technicznie, ale też estetyczny, czytelny i dopracowany na mobile.
+          </p>
+          <div class="profileList">
+            <div>Rozwijam się regularnie po szkole.</div>
+            <div>Tworzę projekty testujące różne style marek.</div>
+            <div>Chcę łączyć technologię z dobrym designem.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section wrap" id="skills">
+      <div class="head reveal">
+        <div class="kicker">Umiejętności</div>
+        <h2>Technologie posegregowane tak, jak w profesjonalnym portfolio.</h2>
+      </div>
+
+      <div class="skillsGrid">
+        <div class="skill reveal">
+          <div class="tag">Frontend</div>
+          <h3>HTML, CSS, JS</h3>
+          <div class="meter"><i style="width:92%"></i></div>
+          <div class="level">Zaawansowany / średniozaawansowany</div>
+        </div>
+
+        <div class="skill reveal">
+          <div class="tag">Backend</div>
+          <h3>Node, API</h3>
+          <div class="meter"><i style="width:42%"></i></div>
+          <div class="level">Początkujący</div>
+        </div>
+
+        <div class="skill reveal">
+          <div class="tag">Bazy danych</div>
+          <h3>SQL, JSON</h3>
+          <div class="meter"><i style="width:48%"></i></div>
+          <div class="level">Początkujący / średni</div>
+        </div>
+
+        <div class="skill reveal">
+          <div class="tag">Narzędzia</div>
+          <h3>Git, VS Code, Figma</h3>
+          <div class="meter"><i style="width:72%"></i></div>
+          <div class="level">Średniozaawansowany</div>
+        </div>
+
+        <div class="skill reveal">
+          <div class="tag">Inne</div>
+          <h3>Next.js, Arduino, SEO</h3>
+          <div class="meter"><i style="width:65%"></i></div>
+          <div class="level">Rozwijany zestaw</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section wrap" id="projects">
+      <div class="head reveal">
+        <div class="kicker">Projekty</div>
+        <h2>Trzy różne kierunki, jedna wspólna cecha: dopracowanie.</h2>
+        <p class="sub">
+          Każdy projekt pokazuje inną stronę mojej pracy: sprzedażową, editorialową i bardziej eksperymentalną. Dzięki temu portfolio wygląda jak dowód rozwoju, a nie zbiór przypadkowych ćwiczeń.
+        </p>
+      </div>
+
+      <div class="projectsGrid">
+        <article class="project reveal">
+          <div class="thumb">
+            <div>
+              <strong>Black Razor Barber</strong>
+              <div class="sub">Komercyjny landing page</div>
+            </div>
+          </div>
+          <div class="meta">
+            <span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">JS</span>
+          </div>
+          <p class="sub">Strona salonu z wyraźnym celem sprzedażowym i mocnym kontrastowym stylem.</p>
+          <ul>
+            <li>Hero, usługi, cennik, opinie, kontakt.</li>
+            <li>Lightbox, filtr galerii, animacje scrolla.</li>
+            <li>Pokazuje myślenie pod klienta i konwersję.</li>
+          </ul>
+          <a class="projectLink" href="https://black-razor-barber.vercel.app" target="_blank" rel="noopener noreferrer">Podejrzyj projekt</a>
+        </article>
+
+        <article class="project reveal">
+          <div class="thumb">
+            <div>
+              <strong>Styl Noyczki</strong>
+              <div class="sub">Premium editorial site</div>
+            </div>
+          </div>
+          <div class="meta">
+            <span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">JS</span>
+          </div>
+          <p class="sub">Spokojniejszy, elegancki layout pokazujący wyczucie marki i typografii.</p>
+          <ul>
+            <li>Mobile menu i responsywny układ.</li>
+            <li>Premium UX i spokojna atmosfera.</li>
+            <li>Dobre ćwiczenie editorial design.</li>
+          </ul>
+          <a class="projectLink" href="https://styl-nozyczki.vercel.app" target="_blank" rel="noopener noreferrer">Podejrzyj projekt</a>
+        </article>
+
+        <article class="project reveal">
+          <div class="thumb">
+            <div>
+              <strong>FreshCuts Studio</strong>
+              <div class="sub">Cyberpunk / tech brand</div>
+            </div>
+          </div>
+          <div class="meta">
+            <span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">JS</span>
+          </div>
+          <p class="sub">Najbardziej rozbudowany projekt z mocnym klimatem i interakcjami.</p>
+          <ul>
+            <li>Sidebar, drawer, modal, aktywna nawigacja.</li>
+            <li>Silny dark mode i neonowy charakter.</li>
+            <li>Pokazuje samodzielność techniczną.</li>
+          </ul>
+          <a class="projectLink" href="https://freshcuts-sage.vercel.app" target="_blank" rel="noopener noreferrer">Podejrzyj projekt</a>
+        </article>
+      </div>
+    </section>
+
+    <section class="section wrap" id="experience">
+      <div class="head reveal">
+        <div class="kicker">Doświadczenie</div>
+        <h2>Doświadczenie projektowe zamiast klasycznego CV.</h2>
+      </div>
+
+      <div class="expGrid">
+        <div class="box reveal">
+          <h3>Projekty własne</h3>
+          <p class="sub">Samodzielnie projektowane strony, w których ćwiczę layout, animacje i responsywność.</p>
+        </div>
+        <div class="box reveal">
+          <h3>Projekty szkolne</h3>
+          <p class="sub">Ćwiczenia i zadania rozwijające logiczne myślenie i porządek w kodzie.</p>
+        </div>
+        <div class="box reveal">
+          <h3>Eksperymenty UI</h3>
+          <p class="sub">Testowanie różnych estetyk: commercial, editorial i futuristic.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section wrap" id="achievements">
+      <div class="head reveal">
+        <div class="kicker">Osiągnięcia</div>
+        <h2>Najważniejsze rzeczy, które już możesz pokazać.</h2>
+      </div>
+
+      <div class="achGrid">
+        <div class="box reveal"><div class="num">3</div><p class="sub">ukończone duże projekty webowe</p></div>
+        <div class="box reveal"><div class="num">7+</div><p class="sub">technologii i narzędzi w praktyce</p></div>
+        <div class="box reveal"><div class="num">100%</div><p class="sub">samodzielnej pracy nad prezentacją projektów</p></div>
+        <div class="box reveal"><div class="num">1</div><p class="sub">jasny cel: rozwój w stronę junior role</p></div>
+      </div>
+    </section>
+
+    <section class="section wrap" id="contact">
+      <div class="head reveal">
+        <div class="kicker">Kontakt</div>
+        <h2>Napisz do mnie, jeśli chcesz współpracować lub zadać pytanie.</h2>
+      </div>
+
+      <div class="contactGrid">
+        <form class="panel form reveal">
+          <div class="field">
+            <label>Imię</label>
+            <input type="text" placeholder="Twoje imię">
+          </div>
+          <div class="field">
+            <label>E-mail</label>
+            <input type="email" placeholder="twoj@email.pl">
+          </div>
+          <div class="field">
+            <label>Wiadomość</label>
+            <textarea placeholder="Napisz, w czym mogę pomóc"></textarea>
+          </div>
+          <button class="btn btnPrimary" type="submit">Wyślij wiadomość</button>
+        </form>
+
+        <div class="panel reveal">
+          <h3>Linki</h3>
+          <div class="profileList">
+            <div>GitHub: https://github.com/jarus-programmer</div>
+            <div>E-mail: yakovliev2010@gmail.com</div>
+            <div>Instagram: https://www.instagram.com/jarus_programmer</div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="wrap footer">
+    © 2026 Yaroslav. Portfolio ucznia technikum informatycznego.
+  </footer>
+
+  <script>
+    const btn = document.getElementById('menuBtn');
+    const nav = document.getElementById('mobileNav');
+
+    btn?.addEventListener('click', () => {
+      const open = nav.classList.toggle('open');
+      btn.setAttribute('aria-expanded', String(open));
+    });
+
+    document.querySelectorAll('.mobileNav a').forEach(a => {
+      a.addEventListener('click', () => {
+        nav.classList.remove('open');
+        btn.setAttribute('aria-expanded', 'false');
+      });
+    });
+
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('in');
+      });
+    }, { threshold: 0.15 });
+
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+    document.querySelector('form')?.addEventListener('submit', (e) => {
+      e.preventDefault();
+      alert('Dziękuję! Formularz jest gotowy do podłączenia.');
+    });
+  </script>
+</body>
+</html>
